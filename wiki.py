@@ -1,9 +1,12 @@
 import os
+import sys
 import os.path
 import markdown
 import codecs
 import glob
 import random
+import webbrowser
+import threading
 
 from flask import Flask, redirect, url_for
 from flask import render_template
@@ -31,11 +34,13 @@ class EditForm(FlaskForm):
     submit = SubmitField('submit')
 
 def gen_file_path( wikiname ):
-    site_root = os.path.realpath(os.path.dirname(__file__))
+    #site_root = os.path.realpath(os.path.dirname(__file__))
+    site_root = os.path.dirname(sys.argv[0])
     return os.path.join(site_root, "wiki", wikiname+".md")
 
 def random_file_path():
-    site_root = os.path.realpath(os.path.dirname(__file__))
+    #site_root = os.path.realpath(os.path.dirname(__file__))
+    site_root = os.path.dirname(sys.argv[0])
     all_path = glob.glob( os.path.join(site_root, "wiki/*.md") )
     random_index = random.randint(0, len(all_path)-1)
     selected = all_path[random_index]
@@ -85,7 +90,8 @@ def show_wiki(wikiname):
         return "Error: " + file_path + " does not exist!"
 
 def save_wiki( wikiname, content ):
-    site_root = os.path.realpath(os.path.dirname(__file__))
+    site_root = os.path.dirname(sys.argv[0])
+    #site_root = os.path.realpath(os.path.dirname(__file__))
     file_path = os.path.join(site_root, "wiki", wikiname+".md")
     file = codecs.open(file_path, "w", "utf-8")
     file.write(content)
@@ -107,8 +113,14 @@ def edit(wikiname):
 def index():
     return redirect(url_for('show_wiki', wikiname='home') )
 
+def run_app( debug=True, port='8893' ):
+    app.run(debug=debug, port=port)
+
+
 if __name__ == '__main__':
     #app.run(host= '0.0.0.0',debug=True, port='8893')
     #app.run(debug=True, port='8893')
-    app.run(debug=True, port='8893')
+    #app.run(debug=True, port='8893')
+    threading.Thread(target=run_app, args=(False, '8893') ).start()
+    webbrowser.open_new( 'http://127.0.0.1:8893' )
 

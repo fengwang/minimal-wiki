@@ -8,6 +8,5 @@ Markdown==3.0.1
 MarkupSafe==1.0
 Werkzeug==0.14.1
 WTForms==2.2.1
-https://github.com/fengwang/markdown/archive/master.zip
 
 

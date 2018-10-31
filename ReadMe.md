@@ -10,6 +10,7 @@ cd minimal-wiki
 virtualenv .
 source ./bin/activate
 pip3 install -r ./requirements.txt
+pip3 install https://github.com/fengwang/markdown/archive/master.zip
 python3 ./wiki.py&
 ```
 

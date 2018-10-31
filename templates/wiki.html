@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block extra_header %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('edit', wikiname=wikiname) }}">
+        Edit
+    </a>
+</li>
+{% endblock %}
+
+{% block content %}
+    {% autoescape false %}
+        {{ converted_html }}
+    {% endautoescape %}
+{% endblock %}
+

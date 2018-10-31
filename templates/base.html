@@ -1,0 +1,78 @@
+<!doctype html>
+<title>Wiki</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Wiki">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="{{ url_for('static', filename='jquery-3.3.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='fontawesome.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fontawesome.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='wiki-style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-custom fixed-top mb-3">
+  <a class="navbar-brand" href="./home">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      {% block extra_header %}{% endblock %}
+      <li class="nav-item">
+        <a class="nav-link" href="./new_wiki">New</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a class="nav-link" href="#">Import</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Upload</a>
+      </li>
+      -->
+      <li class="nav-item">
+        <a class="nav-link" href="./random_wiki">Random</a>
+      </li>
+    </ul>
+  </div>
+    {% block extra_nav %}
+    {% endblock extra_nav %}
+  <div>
+  </div>
+</nav>
+</br>
+
+
+
+<div class="container-fluid" id=main>
+    <div class="row justify-content-md-center mt-5">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10">
+            <div class="wikibody">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<footer>
+Wiki
+</footer>
+
+<script src="{{ url_for('static', filename='prism.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='popper.js') }}"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+{% block extra_script %}
+{% endblock extra_script %}
+</body>
+
+</html>

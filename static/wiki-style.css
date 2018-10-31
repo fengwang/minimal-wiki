@@ -1,0 +1,76 @@
+table {
+    border-collapse: collapse;
+    width: 85%;
+}
+
+th, td {
+    text-align: middle;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #E4E4E4}
+
+tr:hover {background-color: #4CAF50;}
+
+th {
+    background-color: #008080;
+    color: white;
+}
+
+.wikibody {
+    background-color: rgba(0, 0, 0, 0.02);
+    padding: 5%;
+}
+
+nav {
+    width: 100%;
+    background: #008080;
+    padding: 0px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+    color: white;
+}
+
+/* Style the footer */
+footer {
+    background-color: #008080;
+    padding: 0px;
+    text-align: center;
+    color: white;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+
+/*style for links*/
+a:link {
+    color: #3ac569;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #88dba3;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #a3daff;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #03a6ff;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+body {
+    font: 16px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+}
+

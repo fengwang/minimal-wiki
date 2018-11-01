@@ -109,6 +109,14 @@ def edit(wikiname):
         return redirect(url_for('show_wiki', wikiname=wikiname))
     return render_template('edit.html', title=title, content=content, form=form, wikiname=wikiname)
 
+@app.route("/wiki/<wikiname>/home")
+def direct_home(wikiname):
+    return redirect(url_for('show_wiki', wikiname='home'))
+
+@app.route("/wiki/<wikiname>/random_wiki")
+def direct_random(wikiname):
+    return redirect(url_for('random_wiki'))
+
 @app.route('/')
 def index():
     return redirect(url_for('show_wiki', wikiname='home') )

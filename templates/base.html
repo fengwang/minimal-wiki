@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='wiki-style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prism.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tufte.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='latex.css') }}">
     {% block extra_head %}
     {% endblock extra_head %}
 </head>
@@ -22,37 +24,24 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+    <ul class="nav navbar-nav justify-content-center">
       {% block extra_header %}{% endblock %}
-      <li class="nav-item">
-        <a class="nav-link" href="./new_wiki">New</a>
-      </li>
-      <!--
-      <li class="nav-item">
-        <a class="nav-link" href="#">Import</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Upload</a>
-      </li>
-      -->
       <li class="nav-item">
         <a class="nav-link" href="./random_wiki">Random</a>
       </li>
     </ul>
-  </div>
-    {% block extra_nav %}
-    {% endblock extra_nav %}
-  <div>
-  </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item">
+        <a class="nav-link" href="./new_wiki">New</a>
+      </li>
+        {% block extra_nav %}
+        {% endblock extra_nav %}
+    </ul>
 </nav>
-</br>
-
-
 
 <div class="container-fluid" id=main>
     <div class="row justify-content-md-center mt-5">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="wikibody">
                 {% block content %}
                 {% endblock content %}

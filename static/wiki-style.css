@@ -114,11 +114,15 @@ textarea {
     box-sizing: border-box;
     border: 2px solid #30D030;
     border-radius: 2px;
-    background-color: #A8F8A8;
+    color: #008080;
+    background-color: #A8F8D8;
     resize: none;
 }
 
 textarea:focus {
-    background-color: #BBFFBB;
+    background-color: #BBFFDD;
+    color: black;
     border: 2px solid #33FF33;
 }
+
+

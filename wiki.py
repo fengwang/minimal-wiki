@@ -123,7 +123,9 @@ def direct_random(wikiname):
 def search(keyword):
     # generate a list of files containing this keyword
     site_root = os.path.dirname(sys.argv[0])
-    all_path = shuffle(glob.glob( os.path.join(site_root, "wiki/*.md") ))
+    all_path = glob.glob( os.path.join(site_root, "wiki/*.md") )
+    shuffle( all_path )
+    print( f'There are {len(all_path)} file paths found:\n{all_path}\n')
     file_list = []
     for file in all_path:
         with open(file) as f:
@@ -134,14 +136,14 @@ def search(keyword):
     # generate a temporatary wiki for this keyword
     def generate_wiki_link( file_path ):
         file_name = Path( file_path )
-        entry = filename.stem
+        entry = file_name.stem
         return '0. [' + entry + '](./' + entry + ')\n'
 
-    generated_markdown = '### ' + keyword + "\n\n ------ \n\n" # <-- header
+    generated_markdown = '### ' + keyword + " Collection\n\n ------ \n\n" # <-- header
     for file in file_list:
         generated_markdown += generate_wiki_link( file )
 
-    search_wiki_name = 'search_result_for_' + keyword
+    search_wiki_name = '.search_result_for_' + keyword
     search_result_file_name = './wiki/' + search_wiki_name + '.md'
     with open(search_result_file_name, 'w') as outfile:
         outfile.write( generated_markdown )

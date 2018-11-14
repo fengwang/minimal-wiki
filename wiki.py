@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 import os.path
 import markdown
 import codecs
@@ -7,6 +8,7 @@ import glob
 import random
 import webbrowser
 import threading
+from random import shuffle
 
 from flask import Flask, redirect, url_for
 from flask import render_template
@@ -117,6 +119,36 @@ def direct_home(wikiname):
 def direct_random(wikiname):
     return redirect(url_for('random_wiki'))
 
+@app.route("/wiki/search/<keyword>")
+def search(keyword):
+    # generate a list of files containing this keyword
+    site_root = os.path.dirname(sys.argv[0])
+    all_path = shuffle(glob.glob( os.path.join(site_root, "wiki/*.md") ))
+    file_list = []
+    for file in all_path:
+        with open(file) as f:
+            contents = f.read()
+            if keyword in contents:
+                file_list.append( file )
+
+    # generate a temporatary wiki for this keyword
+    def generate_wiki_link( file_path ):
+        file_name = Path( file_path )
+        entry = filename.stem
+        return '0. [' + entry + '](./' + entry + ')\n'
+
+    generated_markdown = '### ' + keyword + "\n\n ------ \n\n" # <-- header
+    for file in file_list:
+        generated_markdown += generate_wiki_link( file )
+
+    search_wiki_name = 'search_result_for_' + keyword
+    search_result_file_name = './wiki/' + search_wiki_name + '.md'
+    with open(search_result_file_name, 'w') as outfile:
+        outfile.write( generated_markdown )
+
+    # show this wiki
+    return redirect(url_for('show_wiki', wikiname=search_wiki_name))
+
 @app.route('/')
 def index():
     return redirect(url_for('show_wiki', wikiname='home') )
@@ -126,9 +158,6 @@ def run_app( debug=True, port='8893' ):
 
 
 if __name__ == '__main__':
-    #app.run(host= '0.0.0.0',debug=True, port='8893')
-    #app.run(debug=True, port='8893')
-    #app.run(debug=True, port='8893')
-    threading.Thread(target=run_app, args=(False, '8893') ).start()
-    webbrowser.open_new( 'http://127.0.0.1:8893' )
+    threading.Thread(target=run_app, args=(False, '8897') ).start()
+    webbrowser.open_new( 'http://127.0.0.1:8897' )
 

@@ -7,15 +7,15 @@
     <form action="" method="post" novalidate>
         {{ search_form.hidden_tag() }}
 
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-10">
-                {{ search_form.search(class_="form-control input-lg",id="inputlg", type="text") }}
+        <div class="container jumbotron">
+            <div class="row">
+                <div class="col-sm-10">
+                    {{ search_form.search(class_="form-control input-lg",id="inputlg", type="text") }}
+                </div>
+                <div class="col-sm-2">
+                    {{ search_form.submit() }}
+                </div>
             </div>
-            <div class="col-sm-2">
-                {{ search_form.submit() }}
-            </div>
-          </div>
         </div>
     </form>
 

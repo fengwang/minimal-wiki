@@ -19,6 +19,13 @@ th {
     text-align: center;
 }
 
+nav {
+    width: 100%;
+    background: #008080;
+    padding: 0px;
+    color: white;
+}
+
 
 /* Style the footer */
 footer {

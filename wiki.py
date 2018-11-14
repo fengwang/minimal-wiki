@@ -35,13 +35,15 @@ class EditForm(FlaskForm):
     content = PageDownField('content', validators=[DataRequired()])
     submit = SubmitField('submit')
 
+class SearchForm(FlaskForm):
+    search = StringField('search', validators=[DataRequired()])
+    submit = SubmitField('submit')
+
 def gen_file_path( wikiname ):
-    #site_root = os.path.realpath(os.path.dirname(__file__))
     site_root = os.path.dirname(sys.argv[0])
     return os.path.join(site_root, "wiki", wikiname+".md")
 
 def random_file_path():
-    #site_root = os.path.realpath(os.path.dirname(__file__))
     site_root = os.path.dirname(sys.argv[0])
     all_path = glob.glob( os.path.join(site_root, "wiki/*.md") )
     random_index = random.randint(0, len(all_path)-1)
@@ -63,6 +65,47 @@ def read_wiki( wikiname ):
         f = open(file_path, 'rt', encoding='utf-8', errors='replace')
         content = f.read()
     return content
+
+@app.route("/wiki/search/<keyword>")
+def search(keyword):
+    keyword = keyword.strip()
+
+    # generate a list of files containing this keyword
+    site_root = os.path.dirname(sys.argv[0])
+    all_path = glob.glob( os.path.join(site_root, "wiki/*.md") )
+    shuffle( all_path )
+    file_list = []
+    for file in all_path:
+        with open(file) as f:
+            contents = f.read()
+            if keyword in contents:
+                file_list.append( file )
+
+    # generate a tmp wiki for this keyword
+    def generate_wiki_link( file_path ):
+        file_name = Path( file_path )
+        entry = file_name.stem
+        return '0. [' + entry + '](./' + entry + ')\n'
+
+    generated_markdown = '### ' + keyword + " Collection\n\n ------ \n\n" # <-- header
+    for file in file_list:
+        generated_markdown += generate_wiki_link( file )
+
+    search_wiki_name = '.search_result_for_' + keyword
+    search_result_file_name = './wiki/' + search_wiki_name + '.md'
+    with open(search_result_file_name, 'w') as outfile:
+        outfile.write( generated_markdown )
+
+    # show generated tmp wiki
+    return redirect(url_for('show_wiki', wikiname=search_wiki_name))
+
+#@app.route('/wiki/search', methods=['POST'])
+@app.route("/wiki/search", methods=["POST", "GET"])
+def search_it():
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        return redirect(url_for('search', keyword=search_form.search.data))
+    return render_template('search.html', search_form=search_form)
 
 @app.route("/wiki/random_wiki")
 def random_wiki():
@@ -119,37 +162,9 @@ def direct_home(wikiname):
 def direct_random(wikiname):
     return redirect(url_for('random_wiki'))
 
-@app.route("/wiki/search/<keyword>")
-def search(keyword):
-    # generate a list of files containing this keyword
-    site_root = os.path.dirname(sys.argv[0])
-    all_path = glob.glob( os.path.join(site_root, "wiki/*.md") )
-    shuffle( all_path )
-    print( f'There are {len(all_path)} file paths found:\n{all_path}\n')
-    file_list = []
-    for file in all_path:
-        with open(file) as f:
-            contents = f.read()
-            if keyword in contents:
-                file_list.append( file )
-
-    # generate a temporatary wiki for this keyword
-    def generate_wiki_link( file_path ):
-        file_name = Path( file_path )
-        entry = file_name.stem
-        return '0. [' + entry + '](./' + entry + ')\n'
-
-    generated_markdown = '### ' + keyword + " Collection\n\n ------ \n\n" # <-- header
-    for file in file_list:
-        generated_markdown += generate_wiki_link( file )
-
-    search_wiki_name = '.search_result_for_' + keyword
-    search_result_file_name = './wiki/' + search_wiki_name + '.md'
-    with open(search_result_file_name, 'w') as outfile:
-        outfile.write( generated_markdown )
-
-    # show this wiki
-    return redirect(url_for('show_wiki', wikiname=search_wiki_name))
+@app.route("/wiki/<wikiname>/search")
+def direct_search(wikiname):
+    return redirect(url_for('search_it'))
 
 @app.route('/')
 def index():

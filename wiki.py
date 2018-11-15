@@ -12,6 +12,7 @@ from random import shuffle
 
 from flask import Flask, redirect, url_for
 from flask import render_template
+from flask import send_from_directory
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
@@ -170,7 +171,11 @@ def direct_search(wikiname):
 def index():
     return redirect(url_for('show_wiki', wikiname='home') )
 
-def run_app( debug=True, port='8893' ):
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+def run_app( debug=True, port='8897' ):
     app.run(debug=debug, port=port)
 
 

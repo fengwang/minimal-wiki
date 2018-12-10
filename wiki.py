@@ -13,6 +13,7 @@ from random import shuffle
 from flask import Flask, redirect, url_for
 from flask import render_template
 from flask import send_from_directory
+from flask import request
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
@@ -31,6 +32,8 @@ pagedown = PageDown( app )
 
 markdown_extensions=[ 'fenced_code', 'abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'def_list', 'admonition', 'meta', 'nl2br', 'sane_lists', 'smarty', 'toc', 'wikilinks' ]
 
+allowed_upload_extensions = ['jpg', 'png', 'gif', 'bmp', 'jpeg']
+
 class EditForm(FlaskForm):
     title = StringField('title', validators=[DataRequired()])
     content = PageDownField('content', validators=[DataRequired()])
@@ -43,6 +46,10 @@ class SearchForm(FlaskForm):
 def gen_file_path( wikiname ):
     site_root = os.path.dirname(sys.argv[0])
     return os.path.join(site_root, "wiki", wikiname+".md")
+
+def gen_image_path():
+    site_root = os.path.dirname(sys.argv[0])
+    return os.path.join(site_root, "wiki", "images" )
 
 def random_file_path():
     site_root = os.path.dirname(sys.argv[0])
@@ -100,13 +107,22 @@ def search(keyword):
     # show generated tmp wiki
     return redirect(url_for('show_wiki', wikiname=search_wiki_name))
 
-#@app.route('/wiki/search', methods=['POST'])
 @app.route("/wiki/search", methods=["POST", "GET"])
 def search_it():
     search_form = SearchForm()
     if search_form.validate_on_submit():
         return redirect(url_for('search', keyword=search_form.search.data))
     return render_template('search.html', search_form=search_form)
+
+@app.route("/wiki/upload", methods=["POST", "GET"])
+def upload():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and ('.' in file.filename) and (file.filename.rsplit('.',1)[1] in allowed_upload_extensions):
+            file.save(os.path.join( gen_image_path(), file.filename))
+            return redirect(url_for('upload'))
+    all_files = os.listdir( gen_image_path() )
+    return render_template('upload.html', all_files=all_files)
 
 @app.route("/wiki/random_wiki")
 def random_wiki():
@@ -167,6 +183,10 @@ def direct_random(wikiname):
 def direct_search(wikiname):
     return redirect(url_for('search_it'))
 
+@app.route("/wiki/<wikiname>/upload")
+def direct_upload(wikiname):
+    return redirect(url_for('upload'))
+
 @app.route('/')
 def index():
     return redirect(url_for('show_wiki', wikiname='home') )
@@ -180,6 +200,6 @@ def run_app( debug=True, port='8897' ):
 
 
 if __name__ == '__main__':
-    threading.Thread(target=run_app, args=(False, '8897') ).start()
-    webbrowser.open_new( 'http://127.0.0.1:8897' )
+    threading.Thread(target=run_app, args=(False, '8891') ).start()
+    webbrowser.open_new( 'http://127.0.0.1:8891' )
 

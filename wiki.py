@@ -200,6 +200,6 @@ def run_app( debug=True, port='8897' ):
 
 
 if __name__ == '__main__':
-    threading.Thread(target=run_app, args=(False, '8891') ).start()
-    webbrowser.open_new( 'http://127.0.0.1:8891' )
+    threading.Thread(target=run_app, args=(False, '8897') ).start()
+    webbrowser.open_new( 'http://127.0.0.1:8897' )
 

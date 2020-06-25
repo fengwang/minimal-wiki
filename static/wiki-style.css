@@ -143,7 +143,7 @@ h5 {
 text-align: left;
 text-shadow: 0 0 0.1em #44ffff;
 text-color: white;
-font-size: 12px;
+font-size: 14px;
 }
 
 strong{
@@ -154,9 +154,8 @@ text-shadow: 2px 2px 5px #00f0f0;
 }
 
 
-html *
-{
-   font-family: "YaHei Consolas Hybrid", "WenQuanYi Zen Hei Mono", "WenQuanYi Micro Hei Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono" !important;
+code{
+   font-family: "Noto Sans Mono", "WenQuanYi Zen Hei Mono", "WenQuanYi Micro Hei Mono";
 }
 
 

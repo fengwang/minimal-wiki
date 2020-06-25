@@ -14,6 +14,26 @@ pip3 install https://github.com/fengwang/markdown/archive/master.zip --upgrade
 python3 ./wiki.py&
 ```
 
+### Docker installation
+
+1. build an docker image with name `c-wiki`:
+
+```bash
+git clone https://github.com/fengwang/minimal-wiki.git
+cd minimal-wiki
+docker build -t c-wiki .
+```
+2. run a container with name `wiki`, exposing port `8895` and storing wiki items folder `/cache/data/wiki` :
+
+```bash
+docker run -p 8895:8895 -v /cache/data/wiki:/wiki --name wiki -d c-wiki
+```
+
+3. copying starting file `home.md` and default folder `wiki/images` to `/cache/data/wiki`:
+```bash
+cp -r ./wiki /cache/data/wiki
+```
+
 
 ### Features:
 

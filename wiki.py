@@ -195,11 +195,12 @@ def index():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+
 def run_app( debug=True, port='8897' ):
-    app.run(debug=debug, port=port)
+    app.run( debug=debug, host='0.0.0.0', port=port )
 
 
 if __name__ == '__main__':
     threading.Thread(target=run_app, args=(False, '8895') ).start()
-    webbrowser.open_new( 'http://127.0.0.1:8895' )
+
 

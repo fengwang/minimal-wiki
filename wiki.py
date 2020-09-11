@@ -171,6 +171,14 @@ def edit(wikiname):
         return redirect(url_for('show_wiki', wikiname=wikiname))
     return render_template('edit.html', title=title, content=content, form=form, wikiname=wikiname)
 
+@app.route("/wiki/<wikiname>/todo")
+def redirect_todo(wikiname):
+    return redirect(url_for('todo'))
+
+@app.route("/wiki/todo")
+def todo():
+    return render_template('todo.html')
+
 @app.route("/wiki/<wikiname>/home")
 def direct_home(wikiname):
     return redirect(url_for('show_wiki', wikiname='home'))
@@ -186,6 +194,7 @@ def direct_search(wikiname):
 @app.route("/wiki/<wikiname>/upload")
 def direct_upload(wikiname):
     return redirect(url_for('upload'))
+
 
 @app.route('/')
 def index():

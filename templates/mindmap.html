@@ -27,7 +27,7 @@
 <script id="template-float-panel" type="text/x-jquery-tmpl">
 <div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
   <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix">
-    <span class="ui-dialog-title">${title}</span>
+    <span class="ui-dialog-title">{{ '${title}' }}</span>
     <a class="ui-dialog-titlebar-close ui-corner-all" href="#" role="button">
       <span class="ui-icon"></span>
     </a>
@@ -39,13 +39,13 @@
 
 <script id="template-notification" type="text/x-jquery-tmpl">
 <div class="notification">
-  {{if closeButton}}
+{{ '{{if closeButton}}' }}
   <a href="#" class="close-button">x</a>
-  {{/if}}
-  {{if title}}
-  <h1 class="title">{{html title}}</h1>
-  {{/if}}
-  <div class="content">{{html content}}</div>
+  {{ '{{/if}}' }}
+  {{ '{{if title}}' }}
+  <h1 class="title">{{ '{{html title}}' }}</h1>
+  {{ '{{/if}}' }}
+  <div class="content">{{ '{{html content}}' }}</div>
 </div>
 </script>
 
@@ -239,7 +239,9 @@
   <script src="js/script.js"></script>
   -->
 
-  <script src="{{ url_for('static', filename='jquery-3.3.1.js') }}"></script>
+  <!--
+  -->
+  <script src="{{ url_for('static', filename='jquery.min.1.6.1.js') }}"></script>
   <script src="{{ url_for('static', filename='mindmap/js/filestack.js') }}"></script>
   <script src="{{ url_for('static', filename='mindmap/js/FileSaver.min.js') }}"></script>
   <script src="{{ url_for('static', filename='mindmap/js/script.js') }}"></script>

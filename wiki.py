@@ -218,6 +218,7 @@ def run_app( debug=True, port='8897' ):
 
 
 if __name__ == '__main__':
-    threading.Thread(target=run_app, args=(False, '8895') ).start()
+    run_app(True, '8895')
+    #threading.Thread(target=run_app, args=(False, '8895') ).start()
 
 

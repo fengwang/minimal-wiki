@@ -179,6 +179,14 @@ def redirect_todo(wikiname):
 def todo():
     return render_template('todo.html')
 
+@app.route("/wiki/<wikiname>/mindmap")
+def redirect_mindmap(wikiname):
+    return redirect(url_for('mindmap'))
+
+@app.route("/wiki/mindmap")
+def mindmap():
+    return render_template('mindmap.html')
+
 @app.route("/wiki/<wikiname>/home")
 def direct_home(wikiname):
     return redirect(url_for('show_wiki', wikiname='home'))

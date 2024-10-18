@@ -112,50 +112,38 @@ background-image: linear-gradient(to right, rgba(0, 0.6, 0.6, 0), rgba(0, 0.6, 0
 
 h1 {
 text-align: center;
-text-shadow: 1px 1px 2px black, 0 0 1em #00ffff, 0 0 0.2em #008888;
-text-color: white;
 font-size: 32px;
 }
 
 h2 {
 text-align: left;
-text-shadow: 0 0 0.5em #11f0f0, 0 0 0.1em #11cccc;
-text-color: white;
 font-size: 24px;
 }
 
 h3 {
 text-align: left;
-text-shadow: 0 0 0.5em #22f0f0, 0 0 0.1em #22dddd;
-text-color: white;
 font-size: 20px;
 }
 
 h4 {
 text-align: left;
-text-shadow: 0 0 0.1em #33eeee;
-text-color: white;
 font-size: 16px;
 }
 
 
 h5 {
 text-align: left;
-text-shadow: 0 0 0.1em #44ffff;
-text-color: white;
 font-size: 14px;
 }
 
 strong{
 font-weight: bold;
-/*background-color: #E0F2F1;*/
 background-image: linear-gradient(to bottom right, #FFFFFF, #DDFFFF);
-text-shadow: 2px 2px 5px #00f0f0;
 }
 
 
 code{
-   font-family: "Noto Sans Mono", "WenQuanYi Zen Hei Mono", "WenQuanYi Micro Hei Mono";
+   font-family: "SF Mono", "Noto Sans Mono", "WenQuanYi Zen Hei Mono", "WenQuanYi Micro Hei Mono";
 }
 
 

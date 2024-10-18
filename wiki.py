@@ -8,6 +8,7 @@ import glob
 import random
 import webbrowser
 import threading
+import shutil
 from random import shuffle
 
 from flask import Flask, redirect, url_for
@@ -142,18 +143,30 @@ def new_wiki():
         return redirect(url_for('show_wiki', wikiname=title))
     return render_template('edit.html', title=title, content=content, form=form, wikiname=title)
 
+
+def initialize_wikis():
+    src: str = app.root_path + '/static/default_wiki_contents/*'
+    dst: str = app.root_path + '/wiki/*'
+    shutil.copytree(src, dst)
+
 @app.route('/wiki/<wikiname>')
 def show_wiki(wikiname):
     file_path = gen_file_path(wikiname)
+
+    if 'home' == wikiname and not os.path.isfile(file_path):
+        print( f'Failed to find {file_path}. Trying to initialize wiki.' )
+        initialize_wikis()
+
     if os.path.isfile(file_path):
         converted_html = markdown.markdown_from_file( file_path, output_format='html5', extensions=markdown_extensions )
         return render_template('wiki.html', converted_html=converted_html, wikiname=wikiname )
-    else:#404 here
-        return "Error: " + file_path + " does not exist!"
+
+    return "Error: " + file_path + " does not exist!"
 
 def save_wiki( wikiname, content ):
     site_root = os.path.dirname(sys.argv[0])
     #site_root = os.path.realpath(os.path.dirname(__file__))
+    # TODO: handle overwriting
     file_path = os.path.join(site_root, "wiki", wikiname+".md")
     file = codecs.open(file_path, "w", "utf-8")
     file.write(content)
@@ -213,7 +226,7 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-def run_app( debug=True, port='8897' ):
+def run_app( debug=False, port='8897' ):
     app.run( debug=debug, host='0.0.0.0', port=port )
 
 
